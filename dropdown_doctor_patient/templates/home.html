@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relational Dropdown</title>
+</head>
+<body>
+  <div class="container">
+    <div class="m-5">
+    <form method="post" id="PatientForm" data-doctors-url="{% url 'ajax_load_doctors' %}" class="form-horizontal" role="form">
+      {% csrf_token %}
+      {{ form.as_p}}
+      <button type="submit" class="btn btn-info">Search</button>
+      <!-- <input type="submit" value="Submit" class="btn btn-info"> -->
+    </div>
+  </div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script>
+  $('#id_department').change(function () {
+    const url = $("#PatientForm").attr("data-doctors-url");  
+    const departmentId = $(this).val(); 
+
+    $.ajax({                      
+      url: url, 
+      data: {
+          'department_id': departmentId 
+      },
+      success: function (data) {   
+          $("#id_doctor").html(data);
+      }
+    });
+  });
+</script>
+  
+</body>
+</html>
+
+    
+
+    
